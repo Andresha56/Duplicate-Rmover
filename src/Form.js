@@ -38,7 +38,8 @@ function Form(props) {
         />
         <div className="errorCon">{isEroor && <p className="error">{errorMsg}</p>}</div>
         {isEroor ?<button type="submit">Submit</button>:<Link to="/cards"><button type="submit">Submit</button></Link>}
-        {/* <button type="submit">Submit</button> */}
+
+        {/* <button type="submit"> Submit</button> */}
       </div>
     </form>
   );
