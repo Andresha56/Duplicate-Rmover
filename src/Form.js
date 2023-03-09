@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Form.css";
 import {Link} from "react-router-dom";
-import Cards from "./Cards";
 
-function Form() {
+
+function Form(props) {
   const[inputVal, setInputValue] = useState("");
   const[isEroor,setIsError]=useState(true)
   const[errorMsg,steErrorMsg]=useState("");
@@ -16,13 +16,12 @@ function Form() {
     else if(inputVal.replace(/\s/g,"").length<=0){
         steErrorMsg("White spaces are not allowed!!")
     }
-    else if(inputVal.length < 4){
+    else if(inputVal.replace(/\s/g,"").length<4){
         steErrorMsg("please  enter atleast 4 characters ")
     }
     else{
         setIsError(false);
-       <Cards filterInputData={inputVal}/>
-      
+        props.getFilterInputDatas(inputVal)
     }
   };
 
@@ -39,6 +38,7 @@ function Form() {
         />
         <div className="errorCon">{isEroor && <p className="error">{errorMsg}</p>}</div>
         {isEroor ?<button type="submit">Submit</button>:<Link to="/cards"><button type="submit">Submit</button></Link>}
+        {/* <button type="submit">Submit</button> */}
       </div>
     </form>
   );

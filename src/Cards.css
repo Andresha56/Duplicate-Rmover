@@ -1,0 +1,21 @@
+.CardWrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  width:60%;
+  margin:auto
+}
+.cards {
+  border: 1px solid red;
+  display: flex;
+  height: 60px;
+  margin: 50px 10px;
+}
+.cardVal {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
