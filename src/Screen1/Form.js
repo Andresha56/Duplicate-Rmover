@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import "./Form.css";
 import {Link} from "react-router-dom";
 
-
 function Form(props) {
   const[inputVal, setInputValue] = useState("");
   const[isEroor,setIsError]=useState(true)
-  const[errorMsg,steErrorMsg]=useState("");
+  const[errorMsg,setErrorMsg]=useState("");
 
   const handelSubmit = (e) => {
     e.preventDefault();
     if(!inputVal){
-        steErrorMsg("please provide a non-empty value")
+      setErrorMsg("please provide a non-empty value")
     }
     else if(inputVal.replace(/\s/g,"").length<=0){
-        steErrorMsg("White spaces are not allowed!!")
+      setErrorMsg("White spaces are not allowed!!")
     }
     else if(inputVal.replace(/\s/g,"").length<4){
-        steErrorMsg("please  enter atleast 4 characters ")
+      setErrorMsg("please  enter atleast 4 characters ")
     }
     else{
         setIsError(false);

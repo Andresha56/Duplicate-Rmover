@@ -1,8 +1,8 @@
 
 import './App.css';
-import Form from './Form';
+import Form from './Screen1/Form';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Cards from './Cards';
+import Cards from './Screen2/Cards';
 import { useState } from 'react';
 
 function App() {

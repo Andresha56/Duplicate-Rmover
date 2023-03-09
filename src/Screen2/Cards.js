@@ -1,4 +1,4 @@
-import "./Cards.css";
+import "../Cards.css";
 import { AiOutlineDelete } from "react-icons/ai";
 function Cards(props) {
   const inputTxt = props.newData;
