@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Form.css";
 import {Link} from "react-router-dom";
-import Cards from "./Cards";
+import Cards from "../Screen2/Cards";
 
 function Form() {
   const[inputVal, setInputValue] = useState("");
