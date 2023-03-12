@@ -1,0 +1,16 @@
+/* Screen 1 -------------------------*/
+
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+#root{
+    width: auto;
+    height: auto;
+    background-color: red;
+    justify-content: center;
+    top: 20px;
+    margin: auto;
+}
+
