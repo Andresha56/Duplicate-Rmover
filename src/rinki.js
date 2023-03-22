@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './ayan.css';
 
 
 // ---------------- screen 1 ----------------------------
@@ -30,25 +30,30 @@ function Screen1({ onSubmit }) {
 
 
 
-// ---------------- screen 2 ----------------------------
-
+// ---------------- screen 2 ---------------------------
 
 function Screen2({ originalString, newString, onBackClick }) {
   const [characters, setCharacters] = useState([]);
+  const[newVal,setNewVal]=useState(null)
+  const [showNewStr,setShowStr]=useState(false)
+  const [newchar,setnewchar]=useState(Array.from(originalString))
 
-  const handleDelete = (character) => {
-    const newCharacters = characters.map((c) => {
-      if (c.character === character) {
-        return {
-          ...c,
-          count: 1,
-        };
-      } else {
-        return c;
+  const handleDelete = (value, color) => {
+    const newChar = [];
+    for (let i = 0; i < newchar.length; i++) {
+      if (newchar[i] !== value || newchar.indexOf(value) === i) {
+        newChar.push(newchar[i]);
       }
+    }
+    setnewchar(newChar);
+    
+    const newCharWithColor = newChar.map((char) => {
+      return { character: char, color: color };
     });
-
-    setCharacters(newCharacters);
+    setCharacters(newCharWithColor);
+    const newValue = newChar.join('');
+    setNewVal(newValue);
+    setShowStr(true);
   };
 
   const renderCards = () => {
@@ -57,42 +62,30 @@ function Screen2({ originalString, newString, onBackClick }) {
         backgroundColor: c.color,
       };
 
+
       return (
         <div key={index} style={style}>
           <span>{c.character}</span>
-          <button onClick={() => handleDelete(c.character)}>X</button>
+          <button onClick={() => { handleDelete(c.character,style) }}>X</button>
         </div>
       );
     });
-
     return <div>{cards}</div>;
+
   };
 
   const getCharacters = (string) => {
-    const map = new Map();
-    for (let i = 0; i < string.length; i++) {
-      const char = string.charAt(i);
-      if (map.has(char)) {
-        const count = map.get(char) + 1;
-        map.set(char, count);
-      } else {
-        map.set(char, 1);
-      }
-    }
-
+    //  -------removed-------
     const characters = [];
-    map.forEach((value, key) => {
+    Array.from(string).forEach((value) => {
       const color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
       )}, ${Math.floor(Math.random() * 256)})`;
-
       characters.push({
-        character: key,
-        count: value,
+        character: value,
         color: color,
       });
     });
-
     return characters;
   };
 
@@ -101,18 +94,14 @@ function Screen2({ originalString, newString, onBackClick }) {
     setCharacters(characters);
   }, [originalString]);
 
-  const hasDuplicates = characters.some((c) => c.count > 1);
-
   return (
     <div>
       <h2>Original String: {originalString}</h2>
-      <h2>New String: {newString}</h2>
+    {
+      showNewStr  && <h2>New String={newVal}</h2>
+    }
       {renderCards()}
-      {hasDuplicates ? (
-        <div></div>
-      ) : (
-        <h2 style={{ color: 'green' }}>Success!</h2>
-      )}
+
       <button onClick={onBackClick}>Back</button>
     </div>
   );
@@ -133,7 +122,6 @@ function App() {
       .split('')
       .filter((c, index, array) => array.indexOf(c) === index)
       .join('');
-
     setNewString(newString);
   };
 
@@ -143,16 +131,17 @@ function App() {
   };
 
   if (originalString === '') {
-return <Screen1 onSubmit={handleScreen1Submit} />;
-} else {
-return (
-<Screen2
-     originalString={originalString}
-     newString={newString}
-     onBackClick={handleScreen2BackClick}
-   />
-);
-}
+    return <Screen1 onSubmit={handleScreen1Submit} />;
+  } else {
+    return (
+      <Screen2
+        originalString={originalString}
+        newString={newString}
+        onBackClick={handleScreen2BackClick}
+      />
+    );
+  }
 }
 
-export default App;  
+export default App;
+

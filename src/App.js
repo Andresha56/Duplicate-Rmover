@@ -1,18 +1,20 @@
 
-import './App.css';
-import Form from './Screen1/Form';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Cards from './Screen2/Cards';
-import { useState } from 'react';
+// import './App.css';
+// import Form from './Screen1/Form';
+// import { BrowserRouter, Route, Routes } from "react-router-dom";
+// import Cards from './Screen2/Cards';
+import './ayan.css'
+// import { useState } from 'react';
+import Rinki from './Rinki';
 
 function App() {
-  const [inputData, setInputDatas] = useState("")
-  const filterInputData = value => {
-    setInputDatas(value)
-  }
+  // const [inputData, setInputDatas] = useState("")
+  // const filterInputData = value => {
+  //   setInputDatas(value)
+  // }
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path='/' element={
             <Form getFilterInputDatas={filterInputData} />
@@ -20,6 +22,9 @@ function App() {
           <Route path='/cards' element={<Cards newData={inputData} />}></Route>
         </Routes>
       </BrowserRouter>
+      <rinki/> */}
+      <Rinki/>
+      
     </>
   );
 }

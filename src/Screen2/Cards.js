@@ -11,12 +11,17 @@ function Cards(props) {
   const data = Array.from(remeoveSpaceText);
   data.forEach((ele, index) => {
    const a=data.indexOf(ele);
-    if (index !== a) {
+    if (index !== a) {  
+      // setFilterChar(ele)
       console.log(ele)
     }
   });
 
   const values=['a','h','a','r','a'];
+  let check=(val)=>{
+    
+  }
+  let hasDublicates=values.some(check)
   // -----------reference------------
   //  const values=['a','a','h','a','r','a'];
   // data.map((val)=>{
@@ -27,6 +32,8 @@ function Cards(props) {
   // }
   // })
 
+//  const hexaColor=`#${Math.random().toString(16).slice(2,8).padEnd(6,0)}`
+//  console.log(hexa)
 
   const handelDel=()=>{
     console.log("clicked")
