@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import './ayan.css';
+import './cards.css';
 
 
 // ---------------- screen 1 ----------------------------
 
 function Screen1({ onSubmit }) {
   const [inputValue, setInputValue] = useState('');
-
+  // const [noSpaceVal,setNoSpaceVal]=useState(null)
   const handleClick = () => {
-    if (inputValue.trim().length === 0) {
+    const trimValue = inputValue.trim();
+    if (trimValue.length === 0) {
       alert('Please provide a non-empty value');
       return;
     }
-
-    onSubmit(inputValue);
+    const remeoveSpaceText = trimValue.replace(/\s/g, "")
+    onSubmit(inputValue, remeoveSpaceText);
   };
 
   const handleInputChange = (event) => {
@@ -32,11 +33,12 @@ function Screen1({ onSubmit }) {
 
 // ---------------- screen 2 ---------------------------
 
-function Screen2({ originalString, newString, onBackClick }) {
+function Screen2({ originalString, noSpaceString, onBackClick }) {
+  console.log(noSpaceString)
   const [characters, setCharacters] = useState([]);
-  const[newVal,setNewVal]=useState(null)
-  const [showNewStr,setShowStr]=useState(false)
-  const [newchar,setnewchar]=useState(Array.from(originalString))
+  const [newVal, setNewVal] = useState(null)
+  const [showNewStr, setShowStr] = useState(false)
+  const [newchar, setnewchar] = useState(Array.from(noSpaceString))
 
   const handleDelete = (value, color) => {
     const newChar = [];
@@ -46,7 +48,7 @@ function Screen2({ originalString, newString, onBackClick }) {
       }
     }
     setnewchar(newChar);
-    
+
     const newCharWithColor = newChar.map((char) => {
       return { character: char, color: color };
     });
@@ -66,7 +68,7 @@ function Screen2({ originalString, newString, onBackClick }) {
       return (
         <div key={index} style={style}>
           <span>{c.character}</span>
-          <button onClick={() => { handleDelete(c.character,style) }}>X</button>
+          <button onClick={() => { handleDelete(c.character, style) }}>X</button>
         </div>
       );
     });
@@ -90,16 +92,16 @@ function Screen2({ originalString, newString, onBackClick }) {
   };
 
   React.useEffect(() => {
-    const characters = getCharacters(originalString);
+    const characters = getCharacters(noSpaceString);
     setCharacters(characters);
-  }, [originalString]);
+  }, [noSpaceString]);
 
   return (
     <div>
       <h2>Original String: {originalString}</h2>
-    {
-      showNewStr  && <h2>New String={newVal}</h2>
-    }
+      {
+        showNewStr && <h2>New String={newVal}</h2>
+      }
       {renderCards()}
 
       <button onClick={onBackClick}>Back</button>
@@ -114,29 +116,28 @@ function Screen2({ originalString, newString, onBackClick }) {
 
 function App() {
   const [originalString, setOriginalString] = useState('');
-  const [newString, setNewString] = useState('');
+  const [noSpaceString, setNoSpaceString] = useState('');
+  const [isError, setIsError] = useState(true)
 
-  const handleScreen1Submit = (inputValue) => {
-    setOriginalString(inputValue);
-    const newString = inputValue
-      .split('')
-      .filter((c, index, array) => array.indexOf(c) === index)
-      .join('');
-    setNewString(newString);
+  const handleScreen1Submit = (inputVal, nospaceVal) => {
+    const newStr = nospaceVal
+    setOriginalString(inputVal);
+    setNoSpaceString(newStr);
+    setIsError(false)
   };
 
   const handleScreen2BackClick = () => {
-    setOriginalString('');
-    setNewString('');
+    setIsError(true);
+    setNoSpaceString('');
   };
 
-  if (originalString === '') {
+  if (isError === true) {
     return <Screen1 onSubmit={handleScreen1Submit} />;
   } else {
     return (
       <Screen2
         originalString={originalString}
-        newString={newString}
+        noSpaceString={noSpaceString}
         onBackClick={handleScreen2BackClick}
       />
     );
